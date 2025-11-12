@@ -1,6 +1,6 @@
-# X402 Payment Demo - Creative Tim
+# X402 Creative Tim
 
-A Next.js application demonstrating the [X402 Protocol](https://x402.org) for blockchain-based micropayments on Base Network. This project showcases three different payment flows with interactive UIs and secure payment verification.
+A Next.js application demonstrating the [X402 Protocol](https://x402.org) for blockchain-based micropayments on Base Network. This project showcases payment-gated content with dual access methods: beautiful browser UIs and JSON API endpoints for AI agents.
 
 ![X402 Protocol](https://img.shields.io/badge/X402-Protocol-blue)
 ![Base Network](https://img.shields.io/badge/Network-Base-0052FF)
@@ -9,57 +9,108 @@ A Next.js application demonstrating the [X402 Protocol](https://x402.org) for bl
 
 ## 🎯 What is X402?
 
-X402 is a protocol that enables HTTP 402 (Payment Required) status for the modern web, allowing content creators to monetize their APIs and digital content using cryptocurrency micropayments. This demo shows how to integrate X402 payments into a Next.js application.
+X402 is a protocol that enables HTTP 402 (Payment Required) status for the modern web, allowing content creators to monetize their APIs and digital content using cryptocurrency micropayments. This demo shows how to integrate X402 payments into a Next.js application with proper blockchain settlement.
 
 ## ✨ Features
 
-This project demonstrates three payment-gated endpoints with full interactive UIs:
+This project demonstrates three payment-gated content offerings with **dual access methods**:
 
-### 1. **Message API** (`/message`) - $0.10
-- Simple message endpoint for testing
-- GET and POST support
-- Real-time payment verification
-- Perfect for understanding the basic flow
+### Browser Access
+- Beautiful presentation pages with OnchainKit wallet integration
+- Seamless payment flow with USDC on Base Network
+- User-friendly payment success pages with direct download links
 
-### 2. **UI/UX Design Book** (`/ui-ux-book`) - $0.10
-- Digital book download after payment
-- Shows Dropbox links after successful payment
-- Demonstrates content delivery after verification
-- PDF-based content distribution
+### API Access
+- JSON endpoints for AI agents and programmatic access
+- Same payment verification through x402 middleware
+- Perfect for integrating with AI tools and automated systems
 
-### 3. **ShadCN UI Component Blocks** (`/shadcn-blocks`) - $0.01
-- Premium UI components from Creative Tim
-- Fetches real data from Creative Tim registry
-- Copy-paste ready code blocks
-- Demonstrates API-to-API payment flows
+---
+
+### 1. **Message Content** - $0.10
+**Routes:** `/message` → `/message/user-payment` (Browser) | `/api/message` (API)
+
+Simple message endpoint demonstrating the basic X402 flow. Perfect for testing and understanding the protocol.
+
+**What you get:**
+- Access to protected message content
+- Test X402 micropayment protocol
+- Instant blockchain settlement
+
+---
+
+### 2. **Roots of UI/UX Design Book** - $10.00
+**Routes:** `/ui-ux-book` → `/ui-ux-book/user-payment` (Browser) | `/api/ui-ux-book` (API)
+
+Comprehensive UI/UX design book with practical resources.
+
+**What's included:**
+- **322 Pages** of insights and practical examples
+- **Figma Files** - Design templates ready to use
+- **AI Prompts** - Leverage AI for faster design workflows
+- **Practical Examples** - Real-world case studies and applications
+
+**Browser access** shows a beautiful payment success page with download links.
+**API access** returns JSON with the same download links for programmatic access.
+
+---
+
+### 3. **shadcn/ui Component Blocks** - $0.01
+**Routes:** `/shadcn-blocks` → `/shadcn-blocks/user-payment` (Browser) | `/api/shadcn-block` (API)
+
+Premium UI component blocks from Creative Tim built with shadcn/ui.
+
+**What you get:**
+- Creative Tim x shadcn/ui CRUD form block
+- Complete component and page code
+- Ready to copy and use in your project
+
+---
 
 ## 🏗️ Architecture
 
+### Dual Access Pattern
+
 ```
-┌─────────────┐       ┌──────────────┐       ┌─────────────┐
-│   Client    │──────▶│   X402       │──────▶│  Content    │
-│  (Browser)  │◀──────│  Middleware  │◀──────│  Endpoint   │
-└─────────────┘       └──────────────┘       └─────────────┘
-      │                      │
-      │                      │
-      ▼                      ▼
-┌─────────────┐       ┌──────────────┐
-│   Wallet    │       │ X402 Facil.  │
-│  (MetaMask) │       │  (x402.org)  │
-└─────────────┘       └──────────────┘
+Browser Users:
+┌──────────────┐      ┌─────────────────┐      ┌──────────────────┐
+│ Presentation │─────▶│ User Payment    │─────▶│ Beautiful UI     │
+│ Page         │      │ Page (Protected)│      │ with Downloads   │
+└──────────────┘      └─────────────────┘      └──────────────────┘
+                              │
+                              ▼
+                      ┌──────────────┐
+                      │   X402       │
+                      │  Middleware  │
+                      └──────────────┘
+
+API/AI Agents:
+┌──────────────┐      ┌─────────────────┐      ┌──────────────────┐
+│ API Request  │─────▶│   X402          │─────▶│ JSON Response    │
+│              │      │  Middleware     │      │ with Data        │
+└──────────────┘      └─────────────────┘      └──────────────────┘
 ```
 
-### Payment Flow
+### Payment Flow (Browser)
 
-1. **User visits payment page** (e.g., `/shadcn-blocks`)
-2. **User connects wallet** (MetaMask, Coinbase Wallet, etc.)
-3. **User clicks "Purchase"**
-4. **Client prepares X402 payment** using wagmi hooks
-5. **User signs EIP-712 message** in their wallet
-6. **Payment sent to server action** for verification
-7. **Server verifies payment** with custom ERC-6492 facilitator
-8. **Server settles payment** via X402 facilitator
-9. **Content returned** and displayed to user
+1. **User visits presentation page** (e.g., `/ui-ux-book`)
+2. **User clicks "Get Access"** button
+3. **Redirected to payment page** (`/ui-ux-book/user-payment`)
+4. **X402 middleware intercepts** and shows OnchainKit payment UI
+5. **User connects wallet** (MetaMask, Coinbase Wallet, etc.)
+6. **User completes USDC payment** on Base Network
+7. **Payment settled on blockchain** via @coinbase/x402 facilitator
+8. **User redirected to success page** with download links
+
+### Payment Flow (API)
+
+1. **Client makes API request** to endpoint (e.g., `/api/ui-ux-book`)
+2. **X402 middleware intercepts** and returns 402 Payment Required
+3. **Client receives payment details** (amount, wallet, chain)
+4. **Client completes payment** with Web3 wallet
+5. **Client retries request** with payment proof headers
+6. **Server verifies and settles payment**
+7. **Server returns JSON** with content/download links
 
 ## 🚀 Quick Start
 
@@ -67,15 +118,15 @@ This project demonstrates three payment-gated endpoints with full interactive UI
 
 - Node.js 18+ and npm/pnpm
 - A cryptocurrency wallet (MetaMask recommended)
-- For testnet: Base Sepolia testnet ETH (free from faucets)
-- For mainnet: Real ETH and USDC on Base, plus CDP API keys
+- For testnet: Free testnet USDC from Base Sepolia faucet
+- For mainnet: Real USDC on Base + Coinbase CDP API keys
 
 ### Installation
 
 1. **Clone the repository**
 
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/creativetimofficial/x402-creative-tim
 cd x402-creative-tim
 ```
 
@@ -89,207 +140,181 @@ pnpm install
 
 3. **Configure environment variables**
 
-Copy `.env.example` to `.env.local`:
+Copy `.env.example` to `.env`:
 
 ```bash
-cp .env.example .env.local
+cp .env.example .env
 ```
 
-Edit `.env.local` with your configuration:
+Edit `.env` with your configuration:
 
 ```env
-# Network defaults to mainnet
-# Use ?testnet=true in URL to switch to testnet mode
+# Network Configuration
 NETWORK=mainnet
 
-# Mainnet wallet (default)
-MAINNET_WALLET_ADDRESS=0xYourWalletAddress
-NEXT_PUBLIC_MAINNET_WALLET_ADDRESS=0xYourWalletAddress
-
-# Testnet wallet (for testing with ?testnet=true)
-TESTNET_WALLET_ADDRESS=0xYourWalletAddress
-NEXT_PUBLIC_TESTNET_WALLET_ADDRESS=0xYourWalletAddress
+# Wallet Addresses for receiving payments
+NEXT_PUBLIC_MAINNET_WALLET_ADDRESS=0xYourMainnetWallet
+NEXT_PUBLIC_TESTNET_WALLET_ADDRESS=0xYourTestnetWallet
 
 # CDP API Keys (required for mainnet)
-CDP_API_KEY_NAME=your-cdp-api-key-name
-CDP_API_KEY_PRIVATE_KEY=your-cdp-private-key
+CDP_API_KEY_ID=your-cdp-api-key-id
+CDP_API_KEY_SECRET=your-cdp-api-key-secret
 
 # OnchainKit API key (optional but recommended)
-NEXT_PUBLIC_ONCHAINKIT_API_KEY=your-api-key
+NEXT_PUBLIC_ONCHAINKIT_API_KEY=your-onchainkit-api-key
 
 # App URL
-NEXT_PUBLIC_APP_URL=http://localhost:3000
+NEXT_PUBLIC_APP_URL=http://localhost:3001
+
+# Book Download URLs (for UI/UX book content)
+BOOK_URL_PAID=https://your-dropbox-url
+NEXT_PUBLIC_BOOK_URL_PREVIEW=https://your-preview-pdf-url
 ```
 
-4. **For testing: Enable testnet mode**
-
-Add `?testnet=true` to any URL to test with free tokens:
-```
-http://localhost:3000?testnet=true
-```
-
-Then get testnet tokens:
-- Visit [Base Sepolia Faucet](https://www.alchemy.com/faucets/base-sepolia)
-- Enter your wallet address
-- Request free testnet ETH and USDC
-
-5. **Run the development server**
+4. **Run the development server**
 
 ```bash
 npm run dev
 ```
 
-6. **Open your browser**
+5. **Open your browser**
 
-Visit `http://localhost:3000` and start testing!
+Visit `http://localhost:3001` and start exploring!
 
-## 📱 Demo Pages
+## 🌐 Network Configuration
 
-### Message API Demo
-**Route:** `/message`
+The application supports both **Base Mainnet** (production) and **Base Sepolia** (testnet).
 
-Simple message endpoint demonstrating the basic X402 flow. Perfect for testing and understanding the protocol.
+### Switching Networks
 
-### UI/UX Book Demo
-**Route:** `/ui-ux-book`
+Use the network toggle in the navbar to switch between:
+- **Testnet** (Base Sepolia) - Free testnet USDC
+- **Mainnet** (Base) - Real USDC payments
 
-After payment verification, displays download links for:
-- Complete UI/UX Design Book (Dropbox folder)
-- Free preview PDF
+### Network Details
 
-### ShadCN Blocks Demo
-**Route:** `/shadcn-blocks`
+#### Mainnet (Production)
+- **Network:** Base
+- **Chain ID:** 8453
+- **USDC:** `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`
+- **Settlement:** @coinbase/x402 facilitator with CDP API keys
+- **Requires:** Real USDC and CDP API credentials
 
-After payment, fetches and displays:
-- Component code from Creative Tim registry
-- Registry dependencies
-- Copy-to-clipboard functionality
-- Page integration code
+#### Testnet (Testing)
+- **Network:** Base Sepolia
+- **Chain ID:** 84532
+- **USDC:** `0x036CbD53842c5426634e7929541eC2318f3dCF7e`
+- **Settlement:** Free x402.org facilitator
+- **Faucet:** https://www.alchemy.com/faucets/base-sepolia
+
+### Current Pricing
+
+```typescript
+export const ENDPOINT_PRICING = {
+  'message': 0.10,        // $0.10 USDC
+  'ui-ux-book': 10.00,    // $10.00 USDC
+  'shadcn-block': 0.01,   // $0.01 USDC
+}
+```
+
+Prices are centrally configured in `lib/x402-config.ts` and automatically apply to:
+- Presentation page badges
+- Purchase buttons
+- Middleware payment verification
+- API route protection
+- Success page displays
+
+## 📱 Routes Overview
+
+### Presentation Pages (Public)
+- `/` - Homepage with all offerings
+- `/message` - Message content presentation
+- `/ui-ux-book` - UI/UX book presentation
+- `/shadcn-blocks` - Component blocks presentation
+
+### User Payment Pages (Protected by X402)
+- `/message/user-payment` - Access message after $0.10 payment
+- `/ui-ux-book/user-payment` - Download book after $10.00 payment
+- `/shadcn-blocks/user-payment` - View component code after $0.01 payment
+
+### API Endpoints (Protected by X402)
+- `/api/message` - Returns JSON message content
+- `/api/ui-ux-book` - Returns JSON with download links
+- `/api/shadcn-block` - Returns JSON with component code
 
 ## 🔧 Technical Stack
 
 ### Frontend
-- **Next.js 14** - React framework with App Router
-- **TypeScript** - Type safety
-- **Tailwind CSS** - Styling
-- **shadcn/ui** - UI components
-- **wagmi** - React hooks for Ethereum
-- **viem** - TypeScript Ethereum library
-- **OnchainKit** - Coinbase's Web3 UI components
+- **Next.js 14** with App Router
+- **TypeScript** for type safety
+- **Tailwind CSS** for styling
+- **shadcn/ui** for UI components
+- **OnchainKit** for wallet integration and payment UI
 
 ### Payment & Blockchain
-- **X402 Protocol** - Payment protocol
-- **Base Network** - L2 blockchain (Sepolia testnet / mainnet)
-- **USDC** - Stablecoin for payments
-- **EIP-712** - Typed structured data signing
-- **ERC-6492** - Smart contract wallet signature verification
+- **X402 Protocol** via `x402-next` package
+- **@coinbase/x402** facilitator for mainnet settlement
+- **Base Network** (mainnet and Sepolia testnet)
+- **USDC** stablecoin for all payments
+- **Coinbase CDP** for mainnet transaction settlement
 
 ### Backend
-- **Next.js Server Actions** - Payment verification
-- **X402 Facilitator** - Settlement service
-- **Custom Middleware** - Payment validation
+- **Next.js Middleware** for route protection
+- **Server Components** for payment-protected pages
+- **Official x402 middleware** with proper blockchain settlement
 
 ## 📂 Project Structure
 
 ```
 x402-creative-tim/
 ├── app/
-│   ├── api/
-│   │   ├── message/
-│   │   │   └── route.ts              # Message API endpoint
-│   │   ├── ui-ux-book/
-│   │   │   ├── route.ts              # Book API endpoint
-│   │   │   └── success/route.ts      # Success redirect
-│   │   └── shadcn-block/
-│   │       ├── route.ts              # Block API endpoint
-│   │       └── success/route.ts      # Success redirect
-│   ├── message/page.tsx              # Message demo UI
-│   ├── ui-ux-book/page.tsx           # Book demo UI
-│   ├── shadcn-blocks/page.tsx        # Blocks demo UI
-│   ├── actions.ts                    # Server actions for payment
-│   ├── layout.tsx                    # Root layout with providers
+│   ├── api/                          # API routes (return JSON)
+│   │   ├── message/route.ts          # Message API ($0.10)
+│   │   ├── ui-ux-book/route.ts       # Book API ($10.00)
+│   │   └── shadcn-block/route.ts     # Component API ($0.01)
+│   ├── message/
+│   │   ├── page.tsx                  # Message presentation page
+│   │   └── user-payment/page.tsx     # Payment success page
+│   ├── ui-ux-book/
+│   │   ├── page.tsx                  # Book presentation page
+│   │   └── user-payment/page.tsx     # Payment success page
+│   ├── shadcn-blocks/
+│   │   ├── page.tsx                  # Blocks presentation page
+│   │   └── user-payment/page.tsx     # Payment success page
+│   ├── layout.tsx                    # Root layout
 │   ├── page.tsx                      # Homepage
-│   └── providers.tsx                 # Wagmi & OnchainKit setup
+│   └── providers.tsx                 # OnchainKit providers
 ├── lib/
-│   ├── x402-config.ts                # X402 configuration
-│   ├── x402-middleware-custom.ts     # Custom middleware
-│   ├── custom-facilitator.ts         # ERC-6492 facilitator
-│   └── network-context.tsx           # Network provider
-├── components/ui/                    # shadcn/ui components
-├── middleware.ts                     # X402 middleware router
-└── .env.example                      # Environment variables template
+│   ├── x402-config.ts                # Pricing & network config
+│   ├── x402-middleware-official.ts   # Official middleware config
+│   └── network-context.tsx           # Network switching context
+├── components/
+│   ├── ui/                           # shadcn/ui components
+│   ├── navbar.tsx                    # Navigation with network toggle
+│   ├── client-layout.tsx             # Client wrapper
+│   └── analytics.tsx                 # Google Tag Manager
+├── middleware.ts                     # Route protection
+└── .env.example                      # Environment template
 ```
 
-## 🔐 Security Considerations
+## 🔐 Security Best Practices
 
-### For Open Source Release
-
-✅ **Safe to share:**
+### ✅ Safe to Share (Public Repo)
 - All code in this repository
 - `.env.example` file
 - Public wallet addresses (for receiving payments)
 - Frontend code and UI components
 
-❌ **NEVER commit:**
-- `.env` or `.env.local` files (already in .gitignore)
+### ❌ NEVER Commit
+- `.env` files (already in .gitignore)
+- CDP API keys (sensitive credentials)
+- Book download URLs (paid content)
 - Private keys or seed phrases
-- CDP API keys
-- OnchainKit API keys (get your own)
 
-### Best Practices
-
-1. **Use separate wallets** for testnet and mainnet
-2. **Never hardcode secrets** in your code
-3. **Use environment variables** for all sensitive data
-4. **Enable 2FA** on all service accounts
-5. **Monitor your wallet** for unauthorized transactions
-6. **Use hardware wallets** for mainnet/production
-
-## 🌐 Network Configuration
-
-This application **defaults to Base Mainnet** for production use. You can easily switch to testnet mode for testing.
-
-### Switching Networks
-
-**Method 1: URL Parameter (Recommended)**
-```
-# Enable testnet mode
-http://localhost:3000?testnet=true
-
-# Disable testnet mode (back to mainnet)
-http://localhost:3000?testnet=false
-```
-
-The testnet setting persists across page navigation using `sessionStorage`.
-
-**Method 2: Navbar Toggle**
-
-Use the Testnet/Mainnet toggle in the navigation bar.
-
-**Method 3: Environment Variable**
-
-Set `NETWORK=testnet` in `.env.local` for server-side default.
-
-### Network Details
-
-#### Mainnet (Default)
-- **Network:** Base
-- **Chain ID:** 8453
-- **RPC:** https://mainnet.base.org
-- **Explorer:** https://basescan.org
-- **USDC:** `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`
-- **Requires:** Real funds, CDP API keys
-
-#### Testnet (via ?testnet=true)
-- **Network:** Base Sepolia
-- **Chain ID:** 84532
-- **RPC:** https://sepolia.base.org
-- **Explorer:** https://sepolia.basescan.org
-- **USDC:** `0x036CbD53842c5426634e7929541eC2318f3dCF7e`
-- **Faucet:** https://www.alchemy.com/faucets/base-sepolia
-- **Facilitator:** https://x402.org/facilitator (free)
-
-See [TESTNET_MODE.md](./TESTNET_MODE.md) for detailed information.
+### Environment Variables
+- **BOOK_URL_PAID** - Server-only, not exposed to client
+- **NEXT_PUBLIC_BOOK_URL_PREVIEW** - Public, safe to expose (free preview)
+- **CDP_API_KEY_SECRET** - Server-only, never exposed
 
 ## 🎨 Customization
 
@@ -299,113 +324,83 @@ Edit `lib/x402-config.ts`:
 
 ```typescript
 export const ENDPOINT_PRICING = {
-  'message': 0.10,       // Change these values
-  'ui-ux-book': 0.10,
-  'shadcn-block': 0.01,
-} as const;
+  'message': 0.10,        // Change to your price
+  'ui-ux-book': 10.00,    // Change to your price
+  'shadcn-block': 0.01,   // Change to your price
+}
 ```
 
-### Add New Endpoints
+All pages automatically update to reflect new pricing.
+
+### Add New Content
 
 1. Add pricing to `lib/x402-config.ts`
-2. Create API route in `app/api/your-endpoint/route.ts`
-3. Add middleware in `middleware.ts`
-4. Create UI page in `app/your-endpoint/page.tsx`
-5. Add server action in `app/actions.ts`
+2. Add route config to `lib/x402-middleware-official.ts`
+3. Add matcher to `middleware.ts`
+4. Create presentation page: `app/your-content/page.tsx`
+5. Create payment page: `app/your-content/user-payment/page.tsx`
+6. Create API route (optional): `app/api/your-content/route.ts`
 
 ### Customize UI
 
-All pages use Tailwind CSS and shadcn/ui components. Modify:
-- `app/globals.css` for global styles
-- Individual page files for layout
-- `components/ui/` for component styles
+- **Global styles:** `app/globals.css`
+- **Components:** `components/ui/` (shadcn/ui)
+- **Navbar:** `components/navbar.tsx`
+- **Layout:** `components/client-layout.tsx`
 
 ## 🧪 Testing
 
-### Test the Payment Flow (Testnet Mode)
+### Testnet Testing (Recommended)
 
-1. **Start the dev server**
-   ```bash
-   npm run dev
-   ```
+1. Switch to testnet using the navbar toggle
+2. Get free testnet USDC from the faucet
+3. Test all payment flows with $0 cost
+4. Verify blockchain settlement on Base Sepolia explorer
 
-2. **Visit a demo page in testnet mode**
-   ```
-   http://localhost:3000/shadcn-blocks?testnet=true
-   ```
+### Mainnet Testing
 
-   The `?testnet=true` parameter switches everything to Base Sepolia testnet.
-
-3. **Connect your wallet** (MetaMask)
-   - The app automatically uses Base Sepolia when in testnet mode
-   - Make sure you have some testnet ETH and USDC
-
-4. **Click "Purchase"**
-   - Sign the EIP-712 message
-   - Wait for payment verification
-   - Content appears after successful payment!
-
-### Switch to Mainnet
-
-Simply remove the `?testnet=true` parameter or add `?testnet=false`:
-```
-http://localhost:3000/shadcn-blocks
-```
-
-You can also use the network toggle in the navbar.
-
-### Get Testnet USDC
-
-Base Sepolia USDC address: `0x036CbD53842c5426634e7929541eC2318f3dCF7e`
-
-You can:
-- Use the [Coinbase Faucet](https://portal.cdp.coinbase.com/products/faucet)
-- Or swap testnet ETH for USDC on testnet DEXs
-
-## 📊 Monitoring Payments
-
-### View Transactions
-
-- **Testnet:** https://sepolia.basescan.org/address/YOUR_WALLET_ADDRESS
-- **Mainnet:** https://basescan.org/address/YOUR_WALLET_ADDRESS
-
-### Server Logs
-
-The application logs detailed payment information:
-```
-🎨 ShadCN Block Payment Verification
-✅ Payment verified, settling...
-✅ Payment settled successfully! Transaction: 0x...
-📦 Fetching block data from Creative Tim registry...
-✅ Block data fetched successfully!
-```
+1. Switch to mainnet using the navbar toggle
+2. Use real USDC for payments
+3. Verify transactions on Base mainnet explorer
+4. Monitor CDP API usage
 
 ## 🚢 Deployment
 
 ### Vercel (Recommended)
 
-1. Push code to GitHub (make sure `.env.local` is gitignored!)
+1. Push code to GitHub
 2. Import project in [Vercel](https://vercel.com)
-3. Add environment variables in project settings
+3. Add environment variables
 4. Deploy
 
 ### Environment Variables for Production
 
 ```env
 NETWORK=mainnet
-MAINNET_WALLET_ADDRESS=0x...
 NEXT_PUBLIC_MAINNET_WALLET_ADDRESS=0x...
-CDP_API_KEY_NAME=organizations/.../apiKeys/...
-CDP_API_KEY_PRIVATE_KEY=...
+NEXT_PUBLIC_TESTNET_WALLET_ADDRESS=0x...
+CDP_API_KEY_ID=...
+CDP_API_KEY_SECRET=...
 NEXT_PUBLIC_ONCHAINKIT_API_KEY=...
 NEXT_PUBLIC_APP_URL=https://your-domain.com
+BOOK_URL_PAID=https://your-dropbox-url
+NEXT_PUBLIC_BOOK_URL_PREVIEW=https://your-preview-url
 ```
+
+## 📊 Wallet Addresses
+
+This project uses specific wallet addresses for receiving payments:
+
+- **Mainnet:** `0x45ac00db8bdd4b837abbbf75888cbdfe6b6d8943`
+- **Testnet:** `0x92a0f8ac8b8c2ef60d6d46e0f768067fa379f7f3`
+
+Configure your own addresses in the `.env` file.
 
 ## 📚 Resources
 
-- [X402 Protocol](https://x402.org) - Payment protocol documentation
-- [Base Network](https://docs.base.org) - L2 blockchain documentation
-- [wagmi](https://wagmi.sh) - React hooks for Ethereum
+- [X402 Protocol](https://x402.org) - Official protocol documentation
+- [x402-next Package](https://www.npmjs.com/package/x402-next) - Next.js middleware
+- [Base Network](https://docs.base.org) - Layer 2 documentation
 - [OnchainKit](https://onchainkit.xyz) - Coinbase Web3 toolkit
 - [shadcn/ui](https://ui.shadcn.com) - UI component library
 - [Coinbase Developer Platform](https://portal.cdp.coinbase.com/) - Get API keys
@@ -416,23 +411,22 @@ Contributions are welcome! Please:
 
 1. Fork the repository
 2. Create a feature branch
-3. Make your changes
-4. Test thoroughly on testnet
-5. Submit a pull request
+3. Test thoroughly on testnet
+4. Submit a pull request
 
 ## ⚖️ License
 
-Apache-2.0 license
+Apache-2.0 License
 
 ## 🙏 Acknowledgments
 
 - [X402 Protocol](https://x402.org) for the payment infrastructure
-- [Creative Tim](https://www.creative-tim.com) for the UI components
+- [Creative Tim UI](https://www.creative-tim.com/ui) for the UI components and design
 - [Coinbase](https://www.coinbase.com) for Base Network and OnchainKit
-- [shadcn](https://twitter.com/shadcn) for the beautiful UI components
+- [shadcn](https://twitter.com/shadcn) for the beautiful UI component system
 
 ---
 
-**Built with ❤️ using Next.js, X402 Protocol, and Base Network**
+**Built with ❤️ by [Creative Tim UI](https://www.creative-tim.com/ui) using Next.js, X402 Protocol, and Base Network**
 
-For questions or issues, please open an issue on GitHub.
+For questions or issues, please open an issue on [GitHub](https://github.com/creativetimofficial/x402-creative-tim).
