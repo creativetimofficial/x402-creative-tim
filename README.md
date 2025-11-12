@@ -1,15 +1,15 @@
-# X402 Creative Tim
+# x402 Creative Tim
 
-A Next.js application demonstrating the [X402 Protocol](https://x402.org) for blockchain-based micropayments on Base Network. This project showcases payment-gated content with dual access methods: beautiful browser UIs and JSON API endpoints for AI agents.
+A Next.js application demonstrating the [x402 Protocol](https://x402.org) for blockchain-based micropayments on Base Network. This project showcases payment-gated content with dual access methods: beautiful browser UIs and JSON API endpoints for AI agents.
 
-![X402 Protocol](https://img.shields.io/badge/X402-Protocol-blue)
+![x402 Protocol](https://img.shields.io/badge/x402-Protocol-blue)
 ![Base Network](https://img.shields.io/badge/Network-Base-0052FF)
 ![Next.js](https://img.shields.io/badge/Next.js-14-black)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 
-## 🎯 What is X402?
+## 🎯 What is x402?
 
-X402 is a protocol that enables HTTP 402 (Payment Required) status for the modern web, allowing content creators to monetize their APIs and digital content using cryptocurrency micropayments. This demo shows how to integrate X402 payments into a Next.js application with proper blockchain settlement.
+x402 is a protocol that enables HTTP 402 (Payment Required) status for the modern web, allowing content creators to monetize their APIs and digital content using cryptocurrency micropayments. This demo shows how to integrate x402 payments into a Next.js application with proper blockchain settlement.
 
 ## ✨ Features
 
@@ -30,11 +30,11 @@ This project demonstrates three payment-gated content offerings with **dual acce
 ### 1. **Message Content** - $0.10
 **Routes:** `/message` → `/message/user-payment` (Browser) | `/api/message` (API)
 
-Simple message endpoint demonstrating the basic X402 flow. Perfect for testing and understanding the protocol.
+Simple message endpoint demonstrating the basic x402 flow. Perfect for testing and understanding the protocol.
 
 **What you get:**
 - Access to protected message content
-- Test X402 micropayment protocol
+- Test x402 micropayment protocol
 - Instant blockchain settlement
 
 ---
@@ -80,13 +80,13 @@ Browser Users:
                               │
                               ▼
                       ┌──────────────┐
-                      │   X402       │
+                      │   x402       │
                       │  Middleware  │
                       └──────────────┘
 
 API/AI Agents:
 ┌──────────────┐      ┌─────────────────┐      ┌──────────────────┐
-│ API Request  │─────▶│   X402          │─────▶│ JSON Response    │
+│ API Request  │─────▶│   x402          │─────▶│ JSON Response    │
 │              │      │  Middleware     │      │ with Data        │
 └──────────────┘      └─────────────────┘      └──────────────────┘
 ```
@@ -96,7 +96,7 @@ API/AI Agents:
 1. **User visits presentation page** (e.g., `/ui-ux-book`)
 2. **User clicks "Get Access"** button
 3. **Redirected to payment page** (`/ui-ux-book/user-payment`)
-4. **X402 middleware intercepts** and shows OnchainKit payment UI
+4. **x402 middleware intercepts** and shows OnchainKit payment UI
 5. **User connects wallet** (MetaMask, Coinbase Wallet, etc.)
 6. **User completes USDC payment** on Base Network
 7. **Payment settled on blockchain** via @coinbase/x402 facilitator
@@ -105,7 +105,7 @@ API/AI Agents:
 ### Payment Flow (API)
 
 1. **Client makes API request** to endpoint (e.g., `/api/ui-ux-book`)
-2. **X402 middleware intercepts** and returns 402 Payment Required
+2. **x402 middleware intercepts** and returns 402 Payment Required
 3. **Client receives payment details** (amount, wallet, chain)
 4. **Client completes payment** with Web3 wallet
 5. **Client retries request** with payment proof headers
@@ -232,12 +232,12 @@ Prices are centrally configured in `lib/x402-config.ts` and automatically apply 
 - `/ui-ux-book` - UI/UX book presentation
 - `/shadcn-blocks` - Component blocks presentation
 
-### User Payment Pages (Protected by X402)
+### User Payment Pages (Protected by x402)
 - `/message/user-payment` - Access message after $0.10 payment
 - `/ui-ux-book/user-payment` - Download book after $10.00 payment
 - `/shadcn-blocks/user-payment` - View component code after $0.01 payment
 
-### API Endpoints (Protected by X402)
+### API Endpoints (Protected by x402)
 - `/api/message` - Returns JSON message content
 - `/api/ui-ux-book` - Returns JSON with download links
 - `/api/shadcn-block` - Returns JSON with component code
@@ -252,7 +252,7 @@ Prices are centrally configured in `lib/x402-config.ts` and automatically apply 
 - **OnchainKit** for wallet integration and payment UI
 
 ### Payment & Blockchain
-- **X402 Protocol** via `x402-next` package
+- **x402 Protocol** via `x402-next` package
 - **@coinbase/x402** facilitator for mainnet settlement
 - **Base Network** (mainnet and Sepolia testnet)
 - **USDC** stablecoin for all payments
@@ -398,7 +398,7 @@ Configure your own addresses in the `.env` file.
 
 ## 📚 Resources
 
-- [X402 Protocol](https://x402.org) - Official protocol documentation
+- [x402 Protocol](https://x402.org) - Official protocol documentation
 - [x402-next Package](https://www.npmjs.com/package/x402-next) - Next.js middleware
 - [Base Network](https://docs.base.org) - Layer 2 documentation
 - [OnchainKit](https://onchainkit.xyz) - Coinbase Web3 toolkit
@@ -420,13 +420,13 @@ Apache-2.0 License
 
 ## 🙏 Acknowledgments
 
-- [X402 Protocol](https://x402.org) for the payment infrastructure
+- [x402 Protocol](https://x402.org) for the payment infrastructure
 - [Creative Tim UI](https://www.creative-tim.com/ui) for the UI components and design
 - [Coinbase](https://www.coinbase.com) for Base Network and OnchainKit
 - [shadcn](https://twitter.com/shadcn) for the beautiful UI component system
 
 ---
 
-**Built with ❤️ by [Creative Tim UI](https://www.creative-tim.com/ui) using Next.js, X402 Protocol, and Base Network**
+**Built with ❤️ by [Creative Tim UI](https://www.creative-tim.com/ui) using Next.js, x402 Protocol, and Base Network**
 
 For questions or issues, please open an issue on [GitHub](https://github.com/creativetimofficial/x402-creative-tim).
