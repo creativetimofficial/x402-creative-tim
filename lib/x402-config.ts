@@ -79,7 +79,7 @@ export function getX402Config(): X402Config {
  */
 export const ENDPOINT_PRICING = {
   'message': 0.10,        // $0.10
-  'ui-ux-book': 0.10,     // $0.10
+  'ui-ux-book': 10.00,    // $10.00
   'shadcn-block': 0.01,   // $0.01
 } as const;
 

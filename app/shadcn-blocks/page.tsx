@@ -3,8 +3,11 @@
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
+import { ENDPOINT_PRICING } from '@/lib/x402-config'
 
 export default function ShadcnBlocksPage() {
+  const price = ENDPOINT_PRICING['shadcn-block']
+
   function handlePurchase() {
     // Redirect to the protected payment page
     window.location.href = '/shadcn-blocks/user-payment'
@@ -43,7 +46,7 @@ export default function ShadcnBlocksPage() {
               </div>
             </div>
             <Badge variant="outline" className="border-blue-500 bg-blue-50 text-blue-700 text-base px-4 py-1.5">
-              $0.01
+              ${price.toFixed(2)}
             </Badge>
           </div>
 
@@ -89,7 +92,7 @@ export default function ShadcnBlocksPage() {
                   size="default"
                   className="min-w-[200px]"
                 >
-                  Purchase for $0.01
+                  Purchase for ${price.toFixed(2)}
                 </Button>
               </div>
             </div>
