@@ -15,7 +15,19 @@ export default function ShadcnBlocksPage() {
 
   return (
     <div className="min-h-screen bg-surface flex items-center justify-center px-4 py-12 md:py-20">
-      <div className="w-full max-w-5xl">
+      <div className="w-full max-w-5xl space-y-6">
+        {/* WIP Notice */}
+        <div className="bg-blue-50 border border-blue-200 rounded-lg px-4 py-3">
+          <div className="flex items-center gap-2">
+            <svg className="h-4 w-4 text-blue-600 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p className="text-sm text-blue-800">
+              All blocks will be available to the protocol in the next days.
+            </p>
+          </div>
+        </div>
+
         {/* Main Card */}
         <Card className="bg-card border p-8 shadow-xl">
           {/* Header Section */}
@@ -42,6 +54,17 @@ export default function ShadcnBlocksPage() {
                 </h2>
                 <p className="text-muted-foreground mt-1 text-sm">
                   Access premium UI component blocks and ready-to-use templates
+                </p>
+                <p className="text-muted-foreground mt-2 text-xs">
+                  This is an example. Code will be from{' '}
+                  <a
+                    href="https://www.creative-tim.com/ui/blocks/cruds#cruds-01"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-primary hover:underline font-medium"
+                  >
+                    Creative Tim UI Blocks
+                  </a>
                 </p>
               </div>
             </div>

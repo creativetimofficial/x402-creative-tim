@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(req: NextRequest) {
   // Payment is verified by middleware - only paid users reach here
-
+ // call la /r/block-name.json and return the code
   const componentCode = `import { Button } from "@/components/ui/button"
 import {
   Card,
