@@ -12,20 +12,15 @@
  */
 
 import { paymentMiddleware } from 'x402-next';
-import { facilitator, createFacilitatorConfig } from '@coinbase/x402';
 import { getX402Config, ENDPOINT_PRICING } from './x402-config';
 import type { Address } from 'viem';
 
 const x402Config = getX402Config();
 
-/**
- * Configure facilitator based on network
- * - Mainnet: Use CDP-hosted facilitator with API keys for production
- * - Testnet: Use community facilitator without authentication
- */
-const facilitatorConfig = x402Config.network === 'mainnet'
-  ? createFacilitatorConfig(x402Config.cdpApiKeyName, x402Config.cdpApiKeyPrivateKey)
-  : facilitator; // Community facilitator for testnet
+// Use facilitator from config (CDP for mainnet, community for testnet)
+if (!x402Config.facilitator) {
+  throw new Error('Facilitator not configured. Check your network settings and API keys.');
+}
 
 /**
  * Unified middleware for all payment-protected endpoints
@@ -94,7 +89,7 @@ export const officialMiddleware = paymentMiddleware(
       },
     },
   },
-  facilitatorConfig, // Uses CDP-hosted facilitator for mainnet, community for testnet
+  x402Config.facilitator,
   {
     appName: 'Creative Tim X402',
     appLogo:  `${process.env.NEXT_PUBLIC_APP_URL}/logo.png`,

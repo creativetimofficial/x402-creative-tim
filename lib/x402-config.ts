@@ -3,8 +3,11 @@
  * Handles network-specific settings for testnet and mainnet
  */
 
+import { facilitator, createFacilitatorConfig } from '@coinbase/x402';
+
 export type NetworkType = 'testnet' | 'mainnet';
 export type ChainType = 'base' | 'base-sepolia';
+export type FacilitatorType = 'x402-org' | 'coinbase-cdp';
 
 /**
  * USDC Token Addresses (Public Constants)
@@ -24,6 +27,8 @@ export interface X402Config {
   walletAddress: string;
   usdcAddress: string;
   facilitatorUrl?: string;
+  facilitator?: any; // Facilitator instance from @coinbase/x402 (community or CDP)
+  facilitatorType: FacilitatorType;
   cdpApiKeyName?: string;
   cdpApiKeyPrivateKey?: string;
 }
@@ -48,6 +53,8 @@ export function getX402Config(): X402Config {
       walletAddress,
       usdcAddress: USDC_ADDRESSES.testnet,
       facilitatorUrl: 'https://x402.org/facilitator',
+      facilitator: facilitator, // Use default community facilitator from @coinbase/x402
+      facilitatorType: 'x402-org',
     };
   } else {
     // Mainnet configuration
@@ -63,11 +70,16 @@ export function getX402Config(): X402Config {
       throw new Error('CDP_API_KEY_ID and CDP_API_KEY_SECRET are required for mainnet');
     }
 
+    // Create CDP facilitator for mainnet using API keys
+    const cdpFacilitator = createFacilitatorConfig(cdpApiKeyName, cdpApiKeyPrivateKey);
+
     return {
       network: 'mainnet',
       chain: 'base',
       walletAddress,
       usdcAddress: USDC_ADDRESSES.mainnet,
+      facilitator: cdpFacilitator,
+      facilitatorType: 'coinbase-cdp',
       cdpApiKeyName,
       cdpApiKeyPrivateKey,
     };
