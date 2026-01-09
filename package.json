@@ -7,9 +7,9 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["x402", "creative-tim", "ui", "ux", "components", "blocks", "api", "payment", "demo"],
+  "author": "@creativetim",
+  "license": "apache-2.0",
   "description": "",
   "dependencies": {
     "@coinbase/coinbase-sdk": "^0.25.0",
