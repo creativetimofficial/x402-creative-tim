@@ -7,9 +7,9 @@
     "start": "next start",
     "lint": "next lint"
   },
-  "keywords": ["x402", "creative-tim", "ui", "ux", "components", "blocks", "api", "payment", "demo"],
-  "author": "@creativetim",
-  "license": "apache-2.0",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "description": "",
   "dependencies": {
     "@coinbase/coinbase-sdk": "^0.25.0",
@@ -26,7 +26,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.469.0",
-    "next": "^15.5.6",
+    "next": "15.5.9",
     "postcss": "^8.5.6",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
